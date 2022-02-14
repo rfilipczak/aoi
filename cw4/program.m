@@ -35,16 +35,13 @@ Vprev = V;
 done = false;
 counter = 0;
 loopGuard = GOAL * 10;
+okprev = 0;
 
 while ~done && counter < loopGuard
-    for i = 2 : ROWS - 1
-        for j = 2 : COLS - 1
-            V(i, j) = (V(i, j-1)+V(i-1,j)+Vprev(i+1,j)+Vprev(i,j+1))/4;
-        end
-    end
     ok = 0;
     for i = 2 : ROWS - 1
         for j = 2 : COLS - 1
+            V(i, j) = (V(i, j-1)+V(i-1,j)+Vprev(i+1,j)+Vprev(i,j+1))/4;
             ok = ok + (abs(V(i,j) - Vprev(i,j)) <= EPS);
         end
     end
@@ -52,6 +49,7 @@ while ~done && counter < loopGuard
         done = true;
     end
     Vprev = V;
+    okprev = ok;
     counter = counter + 1;
 end
 
